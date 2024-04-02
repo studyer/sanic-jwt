@@ -1,7 +1,7 @@
 import inspect
 import logging
 from contextlib import contextmanager
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, UTC
 
 import jwt
 
@@ -57,7 +57,7 @@ class BaseAuthentication:
         And, custom claims, if they exist
         """
         delta = timedelta(seconds=self.config.expiration_delta())
-        exp = datetime.utcnow() + delta
+        exp = datetime.now(UTC) + delta
         additional = {"exp": exp}
 
         for option in ["iss", "iat", "nbf", "aud"]:
